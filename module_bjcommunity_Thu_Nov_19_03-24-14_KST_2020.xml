@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_bjcommunity" default="compile.module.bjcommunity">
+  <dirname property="module.bjcommunity.basedir" file="${ant.file.module_bjcommunity}"/>
+  
+  <property name="module.jdk.home.bjcommunity" value=""/>
+  <property name="module.jdk.bin.bjcommunity" value=""/>
+  <property name="module.jdk.classpath.bjcommunity" value=""/>
+  
+  <property name="compiler.args.bjcommunity" value="-encoding UTF-8 -source 11 -target 1.8 ${compiler.args}"/>
+  
+  <property name="bjcommunity.output.dir" value="undefined"/>
+  <property name="bjcommunity.testoutput.dir" value="undefined"/>
+  
+  <path id="bjcommunity.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bjcommunity.module.production.classpath"/>
+  
+  <path id="bjcommunity.runtime.production.module.classpath"/>
+  
+  <path id="bjcommunity.module.classpath"/>
+  
+  <path id="bjcommunity.runtime.module.classpath"/>
+  
+  
+  <patternset id="excluded.from.module.bjcommunity">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bjcommunity">
+    <patternset refid="excluded.from.module.bjcommunity"/>
+  </patternset>
+  
+  
+  <target name="compile.module.bjcommunity" depends="compile.module.bjcommunity.production,compile.module.bjcommunity.tests" description="Compile module bjcommunity"/>
+  
+  <target name="compile.module.bjcommunity.production" depends="register.custom.compilers" description="Compile module bjcommunity; production classes"/>
+  
+  <target name="compile.module.bjcommunity.tests" depends="register.custom.compilers,compile.module.bjcommunity.production" description="compile module bjcommunity; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.bjcommunity" description="cleanup module">
+    <delete dir="${bjcommunity.output.dir}"/>
+    <delete dir="${bjcommunity.testoutput.dir}"/>
+  </target>
+</project>

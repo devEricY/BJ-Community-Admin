@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjcommunity.admin.Mapper">
+    <select id="getUserNm" resultType="string">
+        select usernm from bbs_member limit 1
+    </select>
+
+    <select id="getUserInfo" resultType="com.bjcommunity.admin.Dto.MemberDTO">
+        select userId, userPw, UserNm from bbs_member limit 1
+    </select>
+</mapper>

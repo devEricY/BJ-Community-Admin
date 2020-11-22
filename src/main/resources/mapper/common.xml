@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjcommunity.admin.Mapper">
+    <select id="getUrlInfo" resultType="com.bjcommunity.admin.Dto.CommonDTO" parameterType="com.bjcommunity.admin.Dto.CommonDTO">
+        select pageUrl,
+        seoKeyWord,
+        seoDesc,
+        ogType,
+        ogTitle,
+        ogDesc,
+        ogImg ,
+        seoTitle
+        from bbs_seo
+        where
+        <if test="pageUrl != null and pageUrl != '' " >
+            pageUrl = #{pageUrl}
+        </if>
+        <if test="pageUrl == null and pageUrl == '' " >
+            pageUrl = 'default'
+        </if>
+    </select>
+
+    <insert id="setInquiry" parameterType="com.bjcommunity.admin.Dto.InquiryDTO">
+        insert into
+        bbs_inquiry_mng (name, email, phone, title, msg, regdate)
+        values(#{name}, #{email}, #{phone}, #{title}, #{msg}, now())
+    </insert>
+
+    <insert id="fileUpload" parameterType="com.bjcommunity.admin.Dto.FileDTO" useGeneratedKeys="true" keyProperty="seqno">
+        insert into bbs_attch_file (filename, fileoriginname, fileurl, regdate, regid, extention)
+        values(#{fileName}, #{fileOriName}, #{fileUrl}, now(), 'dev',  #{fileEts})
+    </insert>
+
+</mapper>

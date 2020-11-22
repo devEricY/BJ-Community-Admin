@@ -1,0 +1,78 @@
+<html>
+<head>
+    <style>
+        .red{color:#f36b6b;}
+        .info{font-size:12px; margin-bottom:3px; margin-top:3px;}
+        .info span{font-weight: bold;}
+        .total_word{margin-top:8px;}
+        .total_price{font-size:12px;}
+        .caution p{margin-top:3px; margin-bottom:3px; font-size:12px;}
+        .caution p.sub{padding-left:16px;}
+    </style>
+</head>
+<body>
+<div style="width:100%; text-align:center; padding-top:30px; min-width:800px; background-color:#e0e0e0; height: 1024px; line-height:1.6; color:#000000; ">
+    <form id="rsvForm" name="rsvForm" action="" method="post">
+        <div style="width:50%; display:inline-block; height: 170px; padding-top:20px; border:1px solid #b2b2b2; background-color:#fff; border-bottom:0px; font-size:12px; min-width:800px;">
+            <div style="width:100%; height:20px; text-align: center;">
+                <h2 style="line-height: 1.6">온라인 예약번호 ${rsvno}</h2>
+
+                <span>감사합니다. ${usrNm}님의 예약이 완료되었습니다.</span><br/>
+                <span>현재는 예약 <span class="red">대기</span> 상태이며, 예약금을 입금해주시면 예약 완료처리가 됩니다.</span>
+
+                <div>
+                    <h2 style="margin-top:5px; margin-bottom: 0px;">예약금 ${deposit}원</h2>
+                    <p style="margin-top:5px; margin-bottom: 3px;">국인은행 054901-04-215558</p>
+                    <p style="margin-top:3px; margin-bottom: 5px;">예금주 유초롱 (에이도즈그라피) </p>
+                </div>
+            </div>
+        </div>
+        <div style="width:50%; display:inline-block; background-color:#fff; height:800px; padding-top:20px; border:1px solid #b2b2b2; min-width:800px;">
+            <div style="width:50%; height: 100%;  display:inline-block; ">
+                <div style="width:100%; float: left; text-align: left;">
+                    <h2 style="font-size:1.4em; margin-bottom:5px;">${rentNm}</h2>
+                    <p class="addr" style="margin-top:0px; font-size:12px;">서울 마포구 동교로22길 23 JS빌딩 지하1층</p>
+                    <p class="info">예약자 성명 : <span>${usrNm}</span></p>
+                    <p class="info">예약 상태 : <span>계약금 입금 대기</span></p>
+                    <p class="info">예약 날짜 : <span>${str_date}</span></p>
+                    <p class="info">대여 시간 : <span>${startTime}:00 ~ ${endTime}:00 (${hour} 시간)</span></p>
+                    <p class="info">예약 인원 : <span>${usrCnt} 명</span></p>
+                    <p class="info">결제 방식 : <span>${payType}</span></p>
+
+                    <div style="float: left; margin-bottom:10px;">
+                        <img src="http://adozstudio.com${rsv_Img}" style="width:100%; height:auto; padding-top:10px;" />
+                    </div>
+                </div>
+
+                <hr style="width:100%; border-color:#96969670; margin-top:10px; display:inline-block;"  /><br/>
+
+                <div style="width:50%; float: left; text-align: left;">
+                    <p class="info">스튜디오 대여 비용</p>
+                    <p class="info" style="margin-top:5px;">장비 대여 비용</p>
+                    <p class="info" style="margin-top:5px;">예약인원 추가 비용</p>
+                </div>
+                <div style="width:50%; float: left; text-align: right;">
+                    <p class="info">KRW ${rentAmt}원</p>
+                    <p class="info" style="margin-top:5px;">KRW ${eqAmt}원</p>
+                    <p class="info" style="margin-top:5px;">KRW ${usrAmt}원</p>
+                </div>
+                <hr style="width:100%; border-color:#e4e4e457; display:inline-block;"  /><br/>
+                <div style="width:50%; float: left; text-align: left;">
+                    <p class="info total_word" style="line-height: 1.2;">총 결제 금액</p>
+                </div>
+                <div style="width:50%; float: left; text-align: right;">
+                    <p class="info total_price" style="line-height: 1.2;">KRW ${rsv_price}원</p>
+                </div>
+                <hr style="width:100%; border-color:#96969670; margin-top:10px; display:inline-block;"  /><br/>
+
+                <div style="width:100%; float: left; text-align: left;" class="caution">
+                    <p>※ 예약 정책 </p>
+                    <p class="sub">- 스케쥴 취소 및 변경 요청은 전화 문의를 이용해 주시길 바랍니다.</p>
+                    <p class="sub">- 예약금 환불 : 촬영일 포함 5일전 100% 이후 불가</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

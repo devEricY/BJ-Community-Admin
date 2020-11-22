@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjcommunity.admin.Mapper">
+    <select id="chkAdmInfo" resultType="int" parameterType="com.bjcommunity.admin.Dto.AdminDTO">
+        select
+        count(usrId)
+        from bbs_admin
+        where
+        usrId = #{usrId}
+    </select>
+
+    <select id="getAdmInfo" resultType="com.bjcommunity.admin.Dto.AdminDTO" parameterType="com.bjcommunity.admin.Dto.AdminDTO">
+        select
+        usrId,
+        usrPw,
+        usrNm,
+        failCnt,
+        auth
+        from bbs_admin
+        where
+        usrId = #{usrId} and usrPw = #{usrPw}
+    </select>
+
+    <insert id="setAdmLog" parameterType="com.bjcommunity.admin.Dto.AdminDTO">
+        insert into bbs_admin_log
+        values(#{usrId}, #{usrNm}, now(), #{pageUrl})
+    </insert>
+
+    <update id="setCntReset" parameterType="com.bjcommunity.admin.Dto.AdminDTO">
+        update bbs_admin set failCnt = 0
+        where usrId = #{usrId}
+    </update>
+
+    <update id="setFailedLogin" parameterType="com.bjcommunity.admin.Dto.AdminDTO">
+        update bbs_admin set failCnt = failCnt + 1
+        where usrId = #{usrId}
+    </update>
+
+    <update id="setRentMstUpdate" parameterType="com.bjcommunity.admin.Dto.RentDTO">
+        update bbs_rent_mst set picprice = #{p_price}, vidprice = #{v_price}, deftime = #{deftime}, defprice = #{usrAmt}, usrcnt = #{defusrcnt}, vid_usrcnt = #{vid_usrcnt}, vid_price = #{vid_price}
+        where seqNo = #{mstSeqNo} :: integer
+    </update>
+
+    <update id="setRentupdate" parameterType="com.bjcommunity.admin.Dto.RentDTO">
+        update bbs_rent_sub set oview_cont = #{oview_cont}, rsv_cont = #{rsv_cont}, price_cont = #{price_cont}, rules_cont = #{rules_cont}, oview_img = #{images}, floor_img = #{floor_img}, equip_img = #{equip_img}
+        where mstSeqNo = #{mstSeqNo} :: integer
+    </update>
+
+    <update id="setRentPreImg" parameterType="com.bjcommunity.admin.Dto.RentDTO">
+        update bbs_rent_mst set preimg = #{pre_img}
+        where seqNo = #{mstSeqNo} :: integer
+    </update>
+
+    <select id="getRentData" resultType="com.bjcommunity.admin.Dto.RentDTO" parameterType="com.bjcommunity.admin.Dto.RentDTO">
+        select
+            mst.picprice p_price,
+            mst.vidprice v_price,
+            mst.deftime deftime,
+            mst.defprice defprice,
+            mst.usrcnt defusrcnt,
+            mst.preimg pre_img,
+            mst.rentsubnm subNm,
+            mst.vid_usrcnt vid_usrcnt,
+            mst.vid_price vid_price,
+            mstseqno,
+            oview_cont,
+            rsv_cont,
+            price_cont,
+            rules_cont,
+            attch_paths(floor_img) floor_images,
+            floor_img,
+            equip_img,
+            attch_paths(equip_img) equip_images,
+            equip_conts,
+            attch_paths(oview_img) images,
+            oview_img
+        from bbs_rent_sub sub
+        inner join bbs_rent_mst mst on mst.seqno = sub.mstseqno
+        where mstseqno = #{mstSeqNo} :: integer
+    </select>
+
+    <delete id="resetOption" parameterType="com.bjcommunity.admin.Dto.RentDTO">
+        delete from bbs_rent_option where rentno = #{mstSeqNo} :: integer and op_type = 'price'
+    </delete>
+
+    <insert id="setOption" parameterType="com.bjcommunity.admin.Dto.RentDTO">
+        insert into bbs_rent_option values(#{mstSeqNo} :: integer, #{op_order} :: integer, #{op_cont1}, #{op_cont2}, #{op_cont3}, #{op_type})
+    </insert>
+
+    <select id="getDashBoard" resultType="com.bjcommunity.admin.Dto.AdminDTO">
+        <![CDATA[
+            select
+                a.rsvCnt totalRsvCnt,
+                b.totalAmt totalRsvAmt
+            from
+                (select count(*) rsvCnt from bbs_rsv_mng brm where delyn = 'N' and status <> 'C') a,
+                (select sum(amount) totalAmt from bbs_rsv_mng brm2 where delyn = 'N' and status <> 'C') b
+        ]]>
+    </select>
+
+
+    <select id="admQnaList" resultType="com.bjcommunity.admin.Dto.InquiryDTO" parameterType="com.bjcommunity.admin.Dto.InquiryDTO" >
+        SELECT
+            rownum,
+            seqno,
+            name,
+            email,
+            phone,
+            title,
+            regDate,
+            ansMsg,
+            ansRegId,
+            ansRegdate
+        FROM (
+        SELECT
+        ROW_NUMBER () OVER (ORDER BY seqno desc) as rownum,
+            seqno,
+            name,
+            email,
+            phone,
+            title,
+            to_char(regDate, 'YYYY-MM-DD hh:mi:ss') regDate,
+            ansMsg,
+            ansRegId,
+            to_char(ansRegdate, 'YYYY-MM-DD hh:mi:ss') ansRegdate
+        FROM bbs_inquiry_mng bim
+        where delYn = 'N'
+        <if test="name != null and name != ''">
+            <![CDATA[
+               and name like '%' || #{name} || '%'
+             ]]>
+        </if>
+        <if test="title != null and title != ''">
+            <![CDATA[
+               and title like '%' || #{title} || '%'
+             ]]>
+        </if>
+        <if test="email != null and email != ''">
+            <![CDATA[
+               and email like '%' || #{email} || '%'
+             ]]>
+        </if>
+        <if test="phone != null and phone != ''">
+            <![CDATA[
+               and phone like '%' || #{phone} || '%'
+             ]]>
+        </if>
+        <if test="regDate != null and regDate != ''">
+            <![CDATA[
+               and regDate like '%' || #{regDate} || '%'
+             ]]>
+        </if>
+        ) x WHERE rownum BETWEEN #{pageStart} AND #{pageEnd}
+    </select>
+
+    <select id="admQnaListCnt" resultType="int" parameterType="com.bjcommunity.admin.Dto.InquiryDTO" >
+        SELECT
+            count(*) cnt
+        FROM bbs_inquiry_mng bim
+        where delYn = 'N'
+        <if test="name != null and name != ''">
+            <![CDATA[
+               and name like '%' || #{name} || '%'
+             ]]>
+        </if>
+        <if test="title != null and title != ''">
+            <![CDATA[
+               and title like '%' || #{title} || '%'
+             ]]>
+        </if>
+        <if test="email != null and email != ''">
+            <![CDATA[
+               and email like '%' || #{email} || '%'
+             ]]>
+        </if>
+        <if test="phone != null and phone != ''">
+            <![CDATA[
+               and phone like '%' || #{phone} || '%'
+             ]]>
+        </if>
+        <if test="regDate != null and regDate != ''">
+            <![CDATA[
+               and regDate like '%' || #{regDate} || '%'
+             ]]>
+        </if>
+    </select>
+
+    <select id="admQnaInfo" resultType="com.bjcommunity.admin.Dto.InquiryDTO" parameterType="com.bjcommunity.admin.Dto.InquiryDTO" >
+        select
+            seqNo,
+            name,
+            email,
+            phone,
+            title,
+            msg,
+            to_char(regDate, 'YYYY-MM-DD hh:mi:ss') regDate,
+            delYn,
+            ansMsg,
+            ansRegId,
+            to_char(ansRegdate, 'YYYY-MM-DD hh:mi:ss') ansRegdate
+            from bbs_inquiry_mng bim
+        where seqno = #{seqNo} and delyn = 'N'
+    </select>
+
+    <update id="admQnaAnswer" parameterType="com.bjcommunity.admin.Dto.InquiryDTO" >
+        update
+        bbs_inquiry_mng
+        set
+            ansMsg = #{ansMsg},
+            ansRegId = #{ansRegId},
+            ansRegDate = now()
+        where seqno = #{seqNo}
+    </update>
+
+    <update id="admQnaDelete" parameterType="com.bjcommunity.admin.Dto.InquiryDTO" >
+        update
+        bbs_inquiry_mng
+        set
+            delYn = 'Y'
+        where seqno = #{seqNo}
+    </update>
+
+    <select id="getDashMonth" resultType="com.bjcommunity.admin.Dto.AdminDTO"  parameterType="com.bjcommunity.admin.Dto.AdminDTO">
+        <![CDATA[
+        select
+            to_char(rsvdate, 'MM') months, subNm, count(*) cnt, sum(amount) price, monthCnt
+            from
+            (select
+                (select rentsubnm from bbs_rent_mst mst where mst.seqno = brm.rentno ) subNm,
+                brm.rsvdate,
+                brm.amount,
+                brm.rentno,
+                brm.delyn,
+                brm.status,
+                (select count(months) cnt from
+                (select to_char(rsvdate, 'MM') months, to_char(rsvdate, 'YYYY') years, rentno from bbs_rsv_mng where delyn = 'N' group by to_char(rsvdate, 'MM'), to_char(rsvdate, 'YYYY'), rentno)
+                mng where years = to_char(brm.rsvdate, 'YYYY') and rentno = brm.rentno) monthCnt
+                from bbs_rsv_mng brm
+            ) A
+        where to_char(rsvdate, 'YYYY') = #{curYear} ::Text and delyn = 'N' and status <> 'C'
+        group by to_char(rsvdate, 'MM'), subNm, monthCnt
+        order by subNm asc, to_char(rsvdate, 'MM') asc
+        ]]>
+    </select>
+
+    <select id="getMainImg" resultType="com.bjcommunity.admin.Dto.RentDTO">
+        select attch_paths(mainImg) images, mainImg from bbs_main_img
+    </select>
+
+    <update id="setMainImg" parameterType="com.bjcommunity.admin.Dto.RentDTO">
+        update bbs_main_img set mainImg = #{images}
+    </update>
+
+    <insert id="addEquipImg" parameterType="com.bjcommunity.admin.Dto.EquipDTO">
+        insert into bbs_equip_img (attachNo, regId)
+        values(#{attachNo}, #{regId})
+    </insert>
+
+    <insert id="addEquipImgList" parameterType="com.bjcommunity.admin.Dto.EquipDTO">
+        insert into bbs_equip_img (attachNo, regId)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.attachNo}, #{item.regId}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getEquipImgList" resultType="com.bjcommunity.admin.Dto.EquipDTO">
+        select seqno, attachno, attch_paths(attachno::text) imgUrl
+        from bbs_equip_img bei
+        where delyn = 'N'
+        order by seqno asc
+    </select>
+
+    <update id="delEquipImg" parameterType="com.bjcommunity.admin.Dto.EquipDTO">
+        update bbs_equip_img set delyn = 'Y' where seqno = #{seqNo}
+    </update>
+
+    <insert id="addEquipList" parameterType="com.bjcommunity.admin.Dto.EquipDTO" >
+        insert into bbs_equip_mst (eqnm, regId, eqType)
+        values(#{eqNm}, #{regId}, #{type})
+    </insert>
+
+    <select id="getEquipList" resultType="com.bjcommunity.admin.Dto.EquipDTO" parameterType="com.bjcommunity.admin.Dto.EquipDTO" >
+        select
+            eqNo, eqNm, regDate, regId, eqType as type
+        from bbs_equip_mst bem where eqtype = #{type} and delYn = 'N'
+    </select>
+
+    <update id="delEquipList" parameterType="com.bjcommunity.admin.Dto.EquipDTO">
+        update bbs_equip_mst set delYn = 'Y' where eqNo = #{eqNo}
+    </update>
+
+    <select id="getEquipData" resultType="com.bjcommunity.admin.Dto.EquipDTO" parameterType="com.bjcommunity.admin.Dto.EquipDTO" >
+        select
+            eqNo, eqType as type
+        from bbs_rent_equip bem where rentNo = #{rentNo} and delYn = 'N'
+    </select>
+
+    <insert id="setEquipData" parameterType="com.bjcommunity.admin.Dto.EquipDTO" >
+        insert into bbs_rent_equip (eqNo, rentNo, regId, eqType)
+        values(#{eqNo}, #{rentNo}, #{regId}, #{type})
+    </insert>
+
+    <insert id="setEquipDataList" parameterType="com.bjcommunity.admin.Dto.EquipDTO" >
+        insert into bbs_rent_equip (eqNo, rentNo, regId, eqType)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.eqNo}, #{item.rentNo}, #{item.regId}, #{item.type}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 장비 데이터 삽입시 테이블에 있는 요소들 rentNo에 따라 미리 삭제 -->
+    <delete id="preDelEquipData" parameterType="com.bjcommunity.admin.Dto.EquipDTO">
+        delete from bbs_rent_equip where rentNo = #{rentNo} and eqtype = #{type}
+    </delete>
+
+    <select id="getRentEquip" resultType="com.bjcommunity.admin.Dto.EquipDTO" parameterType="com.bjcommunity.admin.Dto.EquipDTO" >
+        select
+            bre.eqno eqNo,
+            bre.rentno rentNo,
+            bre.eqtype as type,
+            mst.eqnm eqNm
+        from bbs_rent_equip bre
+        inner join bbs_equip_mst mst on bre.eqno = mst.eqno
+        where rentno = #{rentNo}
+    </select>
+
+    <select id="admMngList" resultType="com.bjcommunity.admin.Dto.AdminDTO" parameterType="com.bjcommunity.admin.Dto.AdminDTO" >
+        SELECT
+            rownum,
+            usrid,
+            usrnm,
+            failcnt,
+            auth,
+            regDate
+        FROM (
+        SELECT
+            ROW_NUMBER () OVER (ORDER BY usrid desc) as rownum,
+            usrid,
+            usrnm,
+            failcnt,
+            auth,
+            to_char(regDate, 'YYYY-MM-DD hh:mi:ss') regDate
+        FROM bbs_admin bim
+        where usrid not in ('dev')
+        ) x WHERE rownum BETWEEN #{pageStart} AND #{pageEnd}
+    </select>
+
+    <select id="admMngListCnt" resultType="int" parameterType="com.bjcommunity.admin.Dto.AdminDTO" >
+        SELECT
+        count(*) cnt
+        FROM bbs_admin bim
+        where usrid not in ('dev')
+    </select>
+
+    <update id="admFailReset" parameterType="com.bjcommunity.admin.Dto.AdminDTO">
+        UPDATE
+            bbs_admin
+        SET
+            failCnt = 0
+        WHERE usrId = #{usrId}
+    </update>
+</mapper>
