@@ -1,0 +1,18 @@
+@font-face { font-family: avenir-light; src: url("/static/fonts/avenirltstd-light.woff") format('woff') }
+@font-face { font-family: helvetica; src: url("/static/fonts/Helvetica-Bold.woff") format('woff') }
+@font-face { font-family: Montserrant-bold; src: url("/static/fonts/Montserrat-Bold.woff") format('woff') }
+@font-face { font-family: Montserrant-black; src: url("/static/fonts/Montserrat-Black.woff") format('woff') }
+@font-face { font-family: Montserrant-regular; src: url("/static/fonts/Montserrat-Regular.woff") format('woff') }
+@font-face { font-family: AvenirLTStd-Medium; src: url("/static/fonts/AvenirLTStd-Medium.woff") format('woff') }
+@font-face { font-family: AvenirLTStd-Book; src: url("/static/fonts/AvenirLTStd-Book.woff") format('woff') }
+@font-face { font-family: AvenirLTStd-Black; src: url("/static/fonts/AvenirLTStd-Black.woff") format('woff') }
+@font-face { font-family: NotoSansKR-Bold; src: url("/static/fonts/NotoSansKR-Bold.woff") format('woff') }
+@font-face { font-family: NotoSansKR-Black; src: url("/static/fonts/NotoSansKR-Black.woff") format('woff') }
+@font-face { font-family: NotoSansKR-Light; src: url("/static/fonts/NotoSansKR-Light.woff") format('woff') }
+@font-face { font-family: NotoSansKR-Medium; src: url("/static/fonts/NotoSansKR-Medium.woff") format('woff') }
+@font-face { font-family: NotoSansKR-Regular; src: url("/static/fonts/NotoSansKR-Regular.woff") format('woff') }
+@font-face { font-family: GothicA1-Regular; src: url("/static/fonts/GothicA1-Regular.woff") format('woff') }
+@font-face { font-family: GothicA1-Black; src: url("/static/fonts/GothicA1-Black.woff") format('woff') }
+@font-face { font-family: GothicA1-ExtraBold; src: url("/static/fonts/GothicA1-ExtraBold.woff") format('woff') }
+@font-face { font-family: GothicA1-Light; src: url("/static/fonts/GothicA1-Light.woff") format('woff') }
+

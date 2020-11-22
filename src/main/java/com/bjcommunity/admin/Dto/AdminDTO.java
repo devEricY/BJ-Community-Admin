@@ -9,21 +9,10 @@ import org.apache.ibatis.type.Alias;
 @Getter
 @Setter
 public class AdminDTO extends PagingDTO{
-    private String usrId;
-    private String usrPw;
-    private String usrNm;
-    private String pageUrl;
-    private String subNm;
-    private String months;
-    int rownum;
-
-    private int auth;
-    private int failCnt;
-    private int totalRsvCnt;
-    private int totalRsvAmt;
-    private int monthCnt;
-    private int price;
-    private int cnt;
-    private int CurYear;
-
+    private String admin_id;
+    private String admin_pwd;
+    private String admin_name;
+    private String admin_nick;
+    private String admin_email;
+    private String admin_phone;
 }

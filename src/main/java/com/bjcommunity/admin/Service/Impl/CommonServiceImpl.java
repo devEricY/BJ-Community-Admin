@@ -2,7 +2,6 @@ package com.bjcommunity.admin.Service.Impl;
 
 import com.bjcommunity.admin.Dto.CommonDTO;
 import com.bjcommunity.admin.Dto.FileDTO;
-import com.bjcommunity.admin.Dto.InquiryDTO;
 import com.bjcommunity.admin.Mapper.CommonMapper;
 import com.bjcommunity.admin.Service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,6 @@ public class CommonServiceImpl implements CommonService {
     public CommonDTO getUrlInfo(CommonDTO commonDTO){
         return commonMapper.getUserInfo(commonDTO);
     }
-
-    @Override
-    public void setInquiry(InquiryDTO inquiryDTO){ commonMapper.setInquiry(inquiryDTO); }
 
     @Override
     public String fileUpload(FileDTO fileDTO){

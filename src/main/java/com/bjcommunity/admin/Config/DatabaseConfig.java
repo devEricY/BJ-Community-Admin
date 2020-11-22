@@ -39,6 +39,7 @@ public class DatabaseConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/*.xml"));
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.bjcommunity.admin.Dto, com.bjcommunity.admin.Vo");
         return sqlSessionFactoryBean.getObject();
     }
 

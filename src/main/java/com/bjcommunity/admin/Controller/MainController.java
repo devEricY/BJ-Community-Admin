@@ -50,7 +50,7 @@ public class MainController {
 
         if(session.getAttribute("admUsrId") != null) {
             try {
-                rtrnData = adminService.getDashBoard();
+                //rtrnData = adminService.getDashBoard();
             } catch (Exception e) {
                 System.out.println(e.getMessage().toString());
             }
