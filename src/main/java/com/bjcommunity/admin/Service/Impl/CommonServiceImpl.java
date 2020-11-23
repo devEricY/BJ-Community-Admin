@@ -15,11 +15,6 @@ public class CommonServiceImpl implements CommonService {
     CommonMapper commonMapper;
 
     @Override
-    public CommonDTO getUrlInfo(CommonDTO commonDTO){
-        return commonMapper.getUserInfo(commonDTO);
-    }
-
-    @Override
     public String fileUpload(FileDTO fileDTO){
         return String.valueOf(commonMapper.fileUpload(fileDTO));
     };

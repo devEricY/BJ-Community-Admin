@@ -15,4 +15,12 @@ public class AdminDTO extends PagingDTO{
     private String admin_nick;
     private String admin_email;
     private String admin_phone;
+
+    private int admin_auth;
+
+    private String access_page;
+    private String access_ip;
+    private String access_device;
+
+    private int failCnt;
 }

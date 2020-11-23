@@ -14,10 +14,6 @@ public class CommonMapper {
     @Autowired
     private SqlSession sqlSession;
 
-    public CommonDTO getUserInfo(CommonDTO commonDTO){
-        return sqlSession.selectOne(NAMESPACE + "getUrlInfo", commonDTO);
-    }
-
     public int fileUpload(FileDTO fileDTO){
         sqlSession.insert(NAMESPACE + "fileUpload", fileDTO);
 

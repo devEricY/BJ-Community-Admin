@@ -2,11 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bjcommunity.admin.Mapper">
-    <select id="" resultType="int" parameterType="AdminDTO">
+    <select id="chk_pre_info" resultType="int" parameterType="AdminDTO">
         SELECT
         COUNT(ADMIN_ID)
         FROM TB_ADMIN
         WHERE
         ADMIN_ID = #{admin_id}
     </select>
+
+    <select id="get_adm_info" resultType="AdminDTO" parameterType="AdminDTO">
+        SELECT
+            ADMIN_ID,
+            ADMIN_PWD,
+            ADMIN_NAME,
+            ADMIN_NICK,
+            ADMIN_EMAIL,
+            ADMIN_AUTH_SEQ
+        FROM TB_ADMIN
+        WHERE
+        ADMIN_ID = #{admin_id}
+    </select>
+
+    <update id="set_adm_failCnt" parameterType="AdminDTO">
+        UPDATE TB_ADMIN
+        SET FAIL_CNT = FAIL_CNT + 1
+        WHERE
+        ADMIN_ID = #{admin_id}
+    </update>
+
+    <update id="set_adm_resetCnt" >
+        UPDATE TB_ADMIN
+        SET FAIL_CNT = 0
+        WHERE
+        ADMIN_ID = #{admin_id}
+    </update>
+
+    <insert id="set_adm_loginLog" parameterType="AdminDTO">
+        INSERT INTO TB_ADMIN_LOG (ADMIN_ID, ADMIN_IP, ACCESS_DATE, DEVICE_TYPE, ACCESS_PAGE)
+        VALUES(#{admin_id}, #{access_ip}, now(), #{access_device}, #{access_page})
+    </insert>
+
 </mapper>

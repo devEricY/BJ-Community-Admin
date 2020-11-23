@@ -1,15 +1,17 @@
 package com.bjcommunity.admin.Service.Impl;
 
 import com.bjcommunity.admin.Dto.*;
+import com.bjcommunity.admin.Enum.AdminEnum;
 import com.bjcommunity.admin.Mapper.AdminMapper;
 import com.bjcommunity.admin.Service.AdminService;
-import org.apache.ibatis.session.SqlSession;
+import com.bjcommunity.admin.Vo.ResultVO;
+import com.bjcommunity.admin.utils.CommonUtils;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Repository
 public class AdminServiceImpl implements AdminService {
@@ -17,39 +19,47 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
 
-    public Map<String, Object> loginProcess(AdminDTO adminDTO){
-        Map<String, Object> results = new HashMap<String, Object>();
-        int dataCnt = adminMapper.chkAdmInfo(adminDTO);
+    public ResultVO loginProcess(AdminDTO adminDTO, HttpServletRequest request){
+        ResultVO resultVO = null;
+        int dataCnt = adminMapper.chk_pre_info(adminDTO);
 
         if(dataCnt <= 0){
-            results.put("returnFlag", 1);                                                                               // returnFlag = 1 테이블에 자료가 없을 때
-            results.put("returnMsg", "아이디 혹은 비밀번호를 확인해주세요.");
+            resultVO = new ResultVO("500", AdminEnum.LOGIN_FAIL.getValue(), null);
         }else{
-            AdminDTO rtrnAdmDTO = adminMapper.getAdmInfo(adminDTO);
+            AdminDTO infoDTO = adminMapper.get_adm_info(adminDTO);
 
-            if(rtrnAdmDTO != null) {
-                if (!rtrnAdmDTO.getUsrId().isEmpty() && !rtrnAdmDTO.getUsrPw().isEmpty()) {
-                    if (rtrnAdmDTO.getFailCnt() >= 5) {
-                        results.put("returnFlag", 3);                                                                       // returnFlag = 3 비밀번호 횟수가 5회 이상일 때
-                        results.put("returnMsg", "비밃번호를 5회이상 틀리셨습니다. 관리자에게 문의해주세요.");
-                    } else {
-                        results.put("returnFlag", 7);                                                                       // returnFlag = 7 데이터를 정상적으로 가져왔을 때
-                        results.put("adminInfo", rtrnAdmDTO);
-                        rtrnAdmDTO.setPageUrl("loginProcessing");
-                        adminMapper.setAdmLog(rtrnAdmDTO);
-                        adminMapper.setCntReset(rtrnAdmDTO);
+            if(infoDTO != null){
+                if(infoDTO.getFailCnt() >= 5) {
+                    resultVO = new ResultVO("500", AdminEnum.LOGIN_FIVE_FAIL.getValue(), null);
+                }else{
+
+                    if(BCrypt.checkpw(adminDTO.getAdmin_pwd(), infoDTO.getAdmin_pwd())){
+
+                        HttpSession session = request.getSession();
+
+                        resultVO = new ResultVO("200", AdminEnum.LOGIN_SUCCESS.getValue(), null);
+
+                        session.setAttribute("admUsrId", infoDTO.getAdmin_id());
+                        session.setAttribute("admUsrNm", infoDTO.getAdmin_name());
+                        session.setAttribute("admAuthCd", infoDTO.getAdmin_auth());
+
+                        adminDTO.setAccess_device(CommonUtils.isDevice(request));
+                        adminDTO.setAccess_page("LoginProcess");
+                        adminDTO.setAccess_ip(String.valueOf(request.getHeader("X-FORWARDED-FOR")));
+                        adminMapper.set_adm_loginLog(adminDTO);
+                        adminMapper.set_adm_resetCnt(adminDTO);
+
+                    }else{
+                        adminMapper.set_adm_failCnt(adminDTO);
+                        resultVO = new ResultVO("500", AdminEnum.LOGIN_FAIL.getValue(), null);
                     }
-                } else {
-                    adminMapper.setFailedLogin(adminDTO);
-                    results.put("returnFlag", 2);                                                                           // returnFlag = 2 비밀번호가 맞지 않을 때
-                    results.put("returnMsg", "아이디 혹은 비밀번호를 확인해주세요.");
                 }
-            }else {
-                adminMapper.setFailedLogin(adminDTO);
-                results.put("returnFlag", 2);                                                                           // returnFlag = 2 비밀번호가 맞지 않을 때
-                results.put("returnMsg", "아이디 혹은 비밀번호를 확인해주세요.");
+            }else{
+                adminMapper.set_adm_failCnt(adminDTO);
+                resultVO = new ResultVO("500", AdminEnum.LOGIN_FAIL.getValue(), null);
             }
         }
-        return results;
+
+        return resultVO;
     }
 }

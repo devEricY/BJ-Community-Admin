@@ -14,8 +14,25 @@ public class AdminMapper {
     @Autowired
     private SqlSession sqlSession;
 
-    public int chkAdmInfo(AdminDTO adminDTO){
-        return sqlSession.selectOne(NAMESPACE + "chkAdmInfo", adminDTO);
+    public int chk_pre_info(AdminDTO adminDTO){
+        return sqlSession.selectOne(NAMESPACE + "chk_pre_info", adminDTO);
     }
+
+    public AdminDTO get_adm_info(AdminDTO adminDTO){
+        return sqlSession.selectOne(NAMESPACE + "get_adm_info", adminDTO);
+    }
+
+    public void set_adm_failCnt(AdminDTO adminDTO){
+        sqlSession.update(NAMESPACE + "set_adm_failCnt", adminDTO);
+    }
+
+    public void set_adm_resetCnt(AdminDTO adminDTO){
+        sqlSession.update(NAMESPACE + "set_adm_resetCnt", adminDTO);
+    }
+
+    public void set_adm_loginLog(AdminDTO adminDTO){
+        sqlSession.insert(NAMESPACE + "set_adm_loginLog", adminDTO);
+    }
+
 
 }

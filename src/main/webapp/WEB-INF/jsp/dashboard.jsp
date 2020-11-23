@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<%@ include file="common/admCommon.jsp" %>
+<%@ include file="common/Common.jsp" %>
 <%@ include file="common/loginCheck.jsp" %>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -18,9 +18,9 @@
     <meta name="msapplication-tap-highlight" content="no">
 </head>
 <body>
-<%@ include file="common/admHeader.jsp" %>
+<%@ include file="common/Header.jsp" %>
 <div class="app-main">
-    <%@ include file="common/admLnb.jsp" %>
+    <%@ include file="common/Lnb.jsp" %>
     <div class="app-main__outer">
     <div class="app-main__inner">
         <div class="row">
@@ -100,7 +100,7 @@
 </div>
 </body>
 </html>
-<script src="/static/admin/js/canvasjs.min.js"></script>
+<script src="/static/js/canvasjs.min.js"></script>
 <script type="text/javascript">
     <c:forEach var="grpData" items="${rtrnGrpData}" varStatus="grpStatus">
         console.log('<c:out value="${grpData.rentNm}" />');

@@ -3,7 +3,7 @@
 <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
     <div class="app-header header-shadow">
         <div class="app-header__logo">
-            <div><a href="/admin/dashboard"><img src="/static/admin/img/logo-inverse.png" style="width:155px;" /></a></div>
+            <div><a href="/dashboard"><%--<img src="/static/img/kob_logo.png" style="width:155px;" />--%></a></div>
             <div class="header__pane ml-auto"><div>
 <%--                <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
                     <span class="hamburger-box">
@@ -32,18 +32,6 @@
     </span>
         </div>
         <div class="app-header__content">
-            <div class="app-header-left">
-                <div class="search-wrapper">
-                    <button class="close"></button>
-                </div>
-                <ul class="header-menu nav">
-                    <li class="nav-item">
-                        <a href="javascript:void(0);" class="nav-link">
-                            <i class="nav-link-icon fa fa-database"> </i>
-                            Statistics
-                        </a>
-                    </li>
-                </ul>        </div>
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
@@ -64,14 +52,15 @@
                                     ${adminId}
                                 </div>
                                 <div class="widget-subheading">
-                                    Adoz Manager
+                                     Manager
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>        </div>
         </div>
-    </div>        <div class="ui-theme-settings">
+    </div>
+    <div class="ui-theme-settings">
     <%--<button type="button" id="TooltipDemo" class="btn-open-options btn btn-warning">
         <i class="fa fa-cog fa-w-16 fa-spin fa-2x"></i>
     </button>--%>

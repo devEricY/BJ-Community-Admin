@@ -2,7 +2,6 @@ package com.bjcommunity.admin.utils;
 
 import com.bjcommunity.admin.Dto.CommonDTO;
 import com.bjcommunity.admin.Dto.FileDTO;
-import com.bjcommunity.admin.Dto.RentDTO;
 import com.bjcommunity.admin.Mapper.CommonMapper;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -37,6 +36,11 @@ public class CommonUtils {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public static final String IS_MOBILE = "MOBILE";
+    private static final String IS_PHONE = "PHONE";
+    public static final String IS_TABLET = "TABLET";
+    public static final String IS_PC = "PC";
+
     @Value("${file.upload.directory}")
     String uploadFileDir;
 
@@ -55,15 +59,6 @@ public class CommonUtils {
     @Autowired
     JavaMailSender javaMailSender;
 
-    public CommonDTO getUrlInfo(String url){
-
-        CommonDTO commonDTO = new CommonDTO();
-        commonDTO.setPageUrl(url);
-
-        commonDTO = (CommonDTO) commonMapper.getUserInfo(commonDTO);
-
-        return commonDTO;
-    }
 
     public Map<String, Object> calendar(String paramYear, String paramMonth){
         String today = "";
@@ -159,6 +154,24 @@ public class CommonUtils {
 
         return dateInfo;
     }
+
+    /**
+     * 모바일,타블렛,PC구분
+     * @param req
+     * @return
+     */
+    public static String isDevice(HttpServletRequest req) {
+        String userAgent = req.getHeader("User-Agent").toUpperCase();
+
+        if(userAgent.indexOf(IS_MOBILE) > -1) {
+            if(userAgent.indexOf(IS_PHONE) == -1)
+                return IS_MOBILE;
+            else
+                return IS_TABLET;
+        } else
+            return IS_PC;
+    }
+
 
     public void sendMail(String gubun, Map<String, Object> data) throws MessagingException{
 
@@ -462,71 +475,6 @@ public class CommonUtils {
         }else{
             return false;
         }
-    }
-
-    public List<Map<String, Object>> rentInfoParsing(List<RentDTO> blockInfo){
-        Map<String, Object> rtrnInfo = new HashMap<String, Object>();
-        Map<String, Object> tempInfo = new HashMap<String, Object>();
-        List<Map<String, Object>> rtrnList = new ArrayList<Map<String,Object>>();
-        List<Map<String, Object>> rentInfo = new ArrayList<>();
-        List<Map<String, Object>> rentInfoList = new ArrayList<>();
-        String[] curBlock = null;
-        int[] curBlockInt = null;
-
-        if( blockInfo != null) {
-            for (int j = 0; j < blockInfo.size(); j++) {
-                tempInfo = new HashMap<String, Object>();
-
-                curBlock = blockInfo.get(j).getRsv_time().split(",");
-                curBlockInt = new int[curBlock.length];
-
-                for (int k = 0; k < curBlock.length; k++) {
-                    curBlockInt[k] = Integer.parseInt(curBlock[k]);
-                }
-
-                Arrays.sort(curBlockInt);
-
-                tempInfo.put("rsvTime", curBlockInt);
-                tempInfo.put("usrNm", blockInfo.get(j).getUsrNm());
-                tempInfo.put("rsvOption", blockInfo.get(j).getRsv_opt());
-
-                if (blockInfo.size() - 1 > j) {
-
-                    if (blockInfo.get(j).getRsv_day().equals(blockInfo.get(j + 1).getRsv_day())) {
-                        rtrnList.add(tempInfo);
-                    } else {
-
-                        rtrnList.add(tempInfo);
-
-                        rtrnInfo.put("day", blockInfo.get(j).getRsv_day());
-                        rtrnInfo.put("date", blockInfo.get(j).getStr_date());
-                        rtrnInfo.put("dateOfStr", blockInfo.get(j).getDateOfStr());
-                        rtrnInfo.put("blockInfo", rtrnList);
-
-                        rentInfo.add(rtrnInfo);
-
-                        rtrnInfo = new HashMap<String, Object>();
-                        rtrnList = new ArrayList<Map<String, Object>>();
-                    }
-                } else {
-                    rtrnList.add(tempInfo);
-
-                    rtrnInfo.put("day", blockInfo.get(j).getRsv_day());
-                    rtrnInfo.put("date", blockInfo.get(j).getStr_date());
-                    rtrnInfo.put("dateOfStr", blockInfo.get(j).getDateOfStr());
-                    rtrnInfo.put("blockInfo", rtrnList);
-
-                    rentInfo.add(rtrnInfo);
-
-                    rtrnInfo = new HashMap<String, Object>();
-                    rtrnList = new ArrayList<Map<String, Object>>();
-                }
-
-            }
-        }
-
-        return rentInfo;
-
     }
 
 }

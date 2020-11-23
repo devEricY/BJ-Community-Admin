@@ -8,8 +8,6 @@ import java.util.List;
 
 @Service
 public interface CommonService {
-    public CommonDTO getUrlInfo(CommonDTO commonDTO);
-
     public String fileUpload(FileDTO fileDTO);
 
     public String fileUpload(List<FileDTO> fileDTO);
