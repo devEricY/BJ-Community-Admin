@@ -34,5 +34,7 @@ public class AdminMapper {
         sqlSession.insert(NAMESPACE + "set_adm_loginLog", adminDTO);
     }
 
+    public AdminDTO get_adm_dashBoard_step1() { return sqlSession.selectOne(NAMESPACE + "get_adm_dashBoard_step1", null); }
 
+    public List<AdminDTO> get_adm_dashBoard_step2() { return sqlSession.selectList(NAMESPACE + "get_adm_dashBoard_step2", null); }
 }

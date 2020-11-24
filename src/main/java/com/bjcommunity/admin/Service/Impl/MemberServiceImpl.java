@@ -15,7 +15,12 @@ public class MemberServiceImpl implements MemberService {
     MemberMapper memberMapper;
 
     @Override
-    public List<MemberDTO> userInfo() throws Exception {
-        return memberMapper.getUserInfo();
+    public List<MemberDTO> get_member_list(MemberDTO memberDTO) throws Exception {
+        return memberMapper.get_member_list(memberDTO);
+    }
+
+    @Override
+    public int get_member_listCnt(MemberDTO memberDTO) throws Exception {
+        return memberMapper.get_member_listCnt(memberDTO);
     }
 }

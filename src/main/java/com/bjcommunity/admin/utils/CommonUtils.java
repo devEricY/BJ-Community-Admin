@@ -477,4 +477,13 @@ public class CommonUtils {
         }
     }
 
+    public Map<String, Object> serverPath(HttpServletRequest request){
+        Map<String, Object> pathMap = new HashMap<String, Object>();
+
+        pathMap.put("subPath", request.getServletPath());  // 현재 경로
+        pathMap.put("subQuery", request.getQueryString()); // 매개 변수
+
+        return pathMap;
+    }
+
 }

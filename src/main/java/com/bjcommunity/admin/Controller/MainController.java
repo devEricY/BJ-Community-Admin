@@ -38,17 +38,15 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main(HttpServletRequest request){
         ModelAndView  modelview = new ModelAndView("/dashboard");
-        String curUrl = request.getServletPath();
-        String curUrlParam = request.getQueryString();
         HttpSession session = request.getSession();
 
         AdminDTO rtrnData = new AdminDTO();
-        AdminDTO adminDTO = new AdminDTO();
-        List<Map<String, Object>> rtrnList = new ArrayList<Map<String, Object>>();
+        List<AdminDTO> rtrnList = new ArrayList<AdminDTO>();
 
         if(session.getAttribute("admin_id") != null) {
             try {
-                //rtrnData = adminService.getDashBoard();
+                rtrnData = adminService.dashBoard_step1();
+                rtrnList = adminService.dashBoard_step2();
             } catch (Exception e) {
                 System.out.println(e.getMessage().toString());
             }
@@ -56,14 +54,20 @@ public class MainController {
             modelview = new ModelAndView("/login");
         }
 
-        modelview.addObject("authCd", session.getAttribute("admin_auth"));
-        modelview.addObject("adminId", session.getAttribute("admin_id"));
+        modelview.addObject("admin_auth", session.getAttribute("admin_auth"));
+        modelview.addObject("admin_id", session.getAttribute("admin_id"));
         modelview.addObject("rtrnData", rtrnData);
         modelview.addObject("rtrnGrpData", rtrnList);
-        modelview.addObject("curUrl", curUrl);
+        modelview.addObject("path", commonUtils.serverPath(request));
         modelview.addObject("isMobile", commonUtils.isMobile(request));
-        modelview.addObject("urlInfo", commonDTO);
 
+        return modelview;
+    }
+
+
+    @RequestMapping(value = "/Login", method = RequestMethod.GET)
+    public ModelAndView login(HttpServletRequest request){
+        ModelAndView  modelview = new ModelAndView("/login");
         return modelview;
     }
 
@@ -84,13 +88,13 @@ public class MainController {
 
         try {
             resVO = adminService.loginProcess(paramMap, request);
-
         } catch (Exception e) {
             System.out.println(e.getMessage().toString());
         }
 
         return resVO;
     }
+
 
 
 }

@@ -14,11 +14,12 @@ public class MemberMapper {
     @Autowired
     private SqlSession sqlSession;
 
-    public String getUserNm(){
-        return sqlSession.selectOne(NAMESPACE + "getUserNm");
+    public List<MemberDTO> get_member_list(MemberDTO memberDTO){
+        return sqlSession.selectList(NAMESPACE + "get_member_list", memberDTO);
     }
 
-    public List<MemberDTO> getUserInfo(){
-        return sqlSession.selectList(NAMESPACE + "getUserInfo");
+    public int get_member_listCnt(MemberDTO memberDTO){
+        return sqlSession.selectOne(NAMESPACE + "get_member_listCnt", memberDTO);
     }
+
 }

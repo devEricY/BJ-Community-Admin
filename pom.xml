@@ -105,6 +105,13 @@
             <version>0.3m</version>
         </dependency>
 
+        <!-- aes256 암호화 -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+
     </dependencies>
 
     <build>

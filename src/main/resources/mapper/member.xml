@@ -3,4 +3,39 @@
 
 <mapper namespace="com.bjcommunity.admin.Mapper">
 
+    <select id="get_member_list" resultType="MemberDTO" parameterType="MemberDTO">
+        SELECT
+            ROWNUM rownum,
+            MEMBER_SEQ,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_NICK,
+            MEMBER_EMAIL,
+            MEMBER_PHONE,
+            REG_DATE reg_date,
+            MEMBER_STATE
+        FROM (
+            SELECT
+                ROW_NUMBER () OVER (ORDER BY MEMBER_SEQ DESC) as ROWNUM,
+                MEMBER_SEQ,
+                MEMBER_ID,
+                MEMBER_NAME,
+                MEMBER_NICK,
+                MEMBER_EMAIL,
+                MEMBER_PHONE,
+                TO_CHAR(REG_DATE, 'YYYY-MM-DD hh:mi:ss') REG_DATE,
+                MEMBER_STATE
+            FROM TB_MEMBER MST
+            WHERE MEMBER_STATE = '0'
+        ) x WHERE ROWNUM BETWEEN #{pageStart} AND #{pageEnd}
+    </select>
+
+    <select id="get_member_listCnt" resultType="int" parameterType="MemberDTO">
+        SELECT
+            COUNT(MEMBER_SEQ)
+        FROM TB_MEMBER MST
+        WHERE MEMBER_STATE = '0'
+    </select>
+
+
 </mapper>

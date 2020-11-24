@@ -7,5 +7,7 @@ import java.util.List;
 
 @Service
 public interface MemberService {
-    public List<MemberDTO> userInfo() throws Exception;
+    public List<MemberDTO> get_member_list(MemberDTO memberDTO) throws Exception;
+
+    public int get_member_listCnt(MemberDTO memberDTO) throws Exception;
 }

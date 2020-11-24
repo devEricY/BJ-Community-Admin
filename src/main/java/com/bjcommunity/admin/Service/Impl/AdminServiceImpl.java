@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Repository
 public class AdminServiceImpl implements AdminService {
@@ -39,9 +40,9 @@ public class AdminServiceImpl implements AdminService {
 
                         resultVO = new ResultVO("200", AdminEnum.LOGIN_SUCCESS.getValue(), null);
 
-                        session.setAttribute("admUsrId", infoDTO.getAdmin_id());
-                        session.setAttribute("admUsrNm", infoDTO.getAdmin_name());
-                        session.setAttribute("admAuthCd", infoDTO.getAdmin_auth());
+                        session.setAttribute("admin_id", infoDTO.getAdmin_id());
+                        session.setAttribute("admin_name", infoDTO.getAdmin_name());
+                        session.setAttribute("admin_auth", infoDTO.getAdmin_auth());
 
                         adminDTO.setAccess_device(CommonUtils.isDevice(request));
                         adminDTO.setAccess_page("LoginProcess");
@@ -61,5 +62,13 @@ public class AdminServiceImpl implements AdminService {
         }
 
         return resultVO;
+    }
+
+    public AdminDTO dashBoard_step1(){
+        return adminMapper.get_adm_dashBoard_step1();
+    }
+
+    public List<AdminDTO> dashBoard_step2(){
+        return adminMapper.get_adm_dashBoard_step2();
     }
 }

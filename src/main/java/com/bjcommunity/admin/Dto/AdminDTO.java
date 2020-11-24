@@ -23,4 +23,8 @@ public class AdminDTO extends PagingDTO{
     private String access_device;
 
     private int failCnt;
+    private int boardCnt;
+    private int memberCnt;
+
+    private String reg_date;
 }

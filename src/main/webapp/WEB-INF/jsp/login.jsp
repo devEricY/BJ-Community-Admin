@@ -2,43 +2,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <%@ include file="common/Common.jsp" %>
-    <body>
-    <div class="app-container app-theme-white body-tabs-shadow">
-        <form id="loginForm" name="loginForm" action="/login" method="post">
-        <div class="app-main" style="margin:auto;">
-            <div class="app-main__outer">
-                <div class="app-main__inner">
-                    <div class="row">
-                        <div class="col-md-12 mt-5">
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="id" class="" style="font-weight:bold; font-size:28px;">KOREA ADMINISTRATOR</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="id" class="" style="font-weight:bold;">ID</label>
-                                    <input name="id" id="id" placeholder="Enter your id" type="id" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="password" class="" style="font-weight:bold;">Password</label>
-                                    <input name="password" id="password" placeholder="Enter your password" type="password" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <a class="mt-2 btn " id="login" style="width:100%; color:#fff; background-color: #0c0b0f;">Login</a>
-                                </div>
-                            </div>
-                        </div>
+    <body style="background-image: linear-gradient(to right, #434343 50%, black 100%) !important">
+    <form id="loginForm" name="loginForm" action="/login" method="post">
+        <div style="width: 30%; margin:auto; padding-top:150px;">
+            <div class="col-md-12 mt-5">
+                <div>
+                    <div class="position-relative form-group text-warning">
+                        <label for="id" class="" style="font-weight:bold; font-size:28px;">KOREA ADMINISTRATOR</label>
+                    </div>
+                </div>
+                <div style="width: 100%;">
+                    <div class="position-relative form-group text-white">
+                        <label for="id" class="" style="font-weight:bold;">ID</label>
+                        <input name="id" id="id" placeholder="Enter your id" type="id" class="form-control">
+                    </div>
+                </div>
+                <div style="width: 100%;">
+                    <div class="position-relative form-group text-white">
+                        <label for="password" class="" style="font-weight:bold;">Password</label>
+                        <input name="password" id="password" placeholder="Enter your password" type="password" class="form-control">
+                    </div>
+                </div>
+                <div style="width: 100%;">
+                    <div class="position-relative form-group">
+                        <a class="mt-2 btn " id="login" style="width:100%; color:#fff; background-color: #e2a40c; font-weight: bold;">Login</a>
                     </div>
                 </div>
             </div>
         </div>
-        </form>
-    </div>
+    </form>
     </body>
 </html>
 
@@ -47,8 +39,6 @@
         $(".bgImg").fadeIn("7000");
 
         $("#login").click(function(){
-
-            console.log("wwww?");
             if($("#id").val() == "" || $("#id").val() == null){
                 alert("please Enter your Id");
                 return;
@@ -64,8 +54,11 @@
                 type:'POST',
                 data: formData,
                 success:function(data){
-                    console.log(data);
-                    alert(data.message);
+                    if(data.code == "200"){
+                        location.href="/";
+                    }else{
+                        alert(data.message);
+                    }
                 }
             })
         })

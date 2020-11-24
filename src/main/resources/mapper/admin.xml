@@ -42,4 +42,18 @@
         VALUES(#{admin_id}, #{access_ip}, now(), #{access_device}, #{access_page})
     </insert>
 
+    <select id="get_adm_dashBoard_step1" resultType="AdminDTO">
+        SELECT
+        (SELECT	COUNT(BOARD_SEQ) FROM TB_BOARD WHERE TO_CHAR(REG_DATE, 'YYYY') = TO_CHAR(NOW(), 'YYYY')) boardCnt,
+        (SELECT COUNT(MEMBER_SEQ) FROM TB_MEMBER WHERE TO_CHAR(REG_DATE, 'YYYY') = TO_CHAR(NOW(), 'YYYY')) memberCnt
+    </select>
+
+    <select id="get_adm_dashBoard_step2" resultType="AdminDTO">
+        SELECT COUNT(*) boardCnt, TO_CHAR(REG_DATE, 'YYYY-MM-DD') reg_date
+        FROM TB_BOARD
+        WHERE TO_CHAR(REG_DATE, 'YYYY-MM-DD') > TO_CHAR((CURRENT_DATE - INTERVAL '10 days'), 'YYYY-MM-DD')
+        GROUP BY REG_DATE
+        ORDER BY REG_DATE
+    </select>
+
 </mapper>

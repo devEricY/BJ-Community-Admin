@@ -1,6 +1,7 @@
 package com.bjcommunity.admin.Dto;
 
 public class PagingDTO {
+    private int rownum;
     private int page;
     private int perPageNum;
     private int endPage;

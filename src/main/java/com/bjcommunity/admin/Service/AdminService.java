@@ -11,4 +11,8 @@ import java.util.Map;
 @Service
 public interface AdminService {
     public ResultVO loginProcess(AdminDTO adminDTO, HttpServletRequest request) throws Exception;
+
+    public AdminDTO dashBoard_step1() throws Exception;
+
+    public List<AdminDTO> dashBoard_step2() throws Exception;
 }
