@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjcommunity.admin.Mapper">
+
+    <select id="get_board_list" resultType="BoardDTO" parameterType="BoardDTO">
+        SELECT
+            ROWNUM rownum,
+            BOARD_SEQ,
+            BOARD_CLASS_SEQ,
+            BOARD_TITLE,
+            BOARD_CONTENT,
+            BOARD_LOCK_YN,
+            BOARD_LOCK_PWD,
+            BOARD_VIEW_CNT,
+            BOARD_RECOMM_CNT,
+            MEMBER_ID,
+            MEMBER_NAME,
+            REG_DATE reg_date
+        FROM (
+        SELECT
+            ROW_NUMBER () OVER (ORDER BY BOARD_SEQ DESC) as ROWNUM,
+            BOARD_SEQ,
+            BOARD_CLASS_SEQ,
+            BOARD_TITLE,
+            BOARD_CONTENT,
+            BOARD_LOCK_YN,
+            BOARD_LOCK_PWD,
+            COALESCE(BOARD_VIEW_CNT, 0) BOARD_VIEW_CNT,
+            COALESCE(BOARD_RECOMM_CNT, 0) BOARD_RECOMM_CNT,
+            MEMBER_ID,
+            (SELECT MEMBER_NAME FROM TB_MEMBER WHERE MEMBER_ID = MST.MEMBER_ID) MEMBER_NAME,
+            TO_CHAR(REG_DATE, 'YYYY-MM-DD hh:mi:ss') REG_DATE
+        FROM TB_BOARD MST
+        WHERE DEL_YN = 'N'
+        <if test="board_class_seq != null and board_class_seq != ''">
+            AND BOARD_CLASS_SEQ = #{board_class_seq}
+        </if>
+        ) x WHERE ROWNUM BETWEEN #{pageStart} AND #{pageEnd}
+    </select>
+
+    <select id="get_board_listCnt" resultType="int" parameterType="BoardDTO">
+        SELECT
+            COUNT(BOARD_SEQ)
+        FROM TB_BOARD MST
+        WHERE DEL_YN = 'N'
+        <if test="board_class_seq != null and board_class_seq != ''">
+            AND BOARD_CLASS_SEQ = #{board_class_seq}
+        </if>
+    </select>
+
+</mapper>

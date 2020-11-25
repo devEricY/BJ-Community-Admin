@@ -65,14 +65,14 @@
                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                 </a>
                 <ul>
-                    <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                    <li <c:if test="${(curUrl eq '/board/list') || (curUrl eq '/board/info')}"> class="mm-active" </c:if>>
+                        <a href="/board/list?class_seq=1">
                             <i class="metismenu-icon"></i>
                             검증 카지노
                         </a>
                     </li>
-                    <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                    <li <c:if test="${(curUrl eq '/board/list') || (curUrl eq '/board/info')}"> class="mm-active" </c:if>>
+                        <a href="/board/list?class_seq=2">
                             <i class="metismenu-icon"></i>
                             비공개 카지노
                         </a>
@@ -87,13 +87,13 @@
                 </a>
                 <ul>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=3">
                             <i class="metismenu-icon"></i>
                             먹튀 사이트
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=4">
                             <i class="metismenu-icon"></i>
                             카지노 사이트
                         </a>
@@ -108,73 +108,73 @@
                 </a>
                 <ul>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=5">
                             <i class="metismenu-icon"></i>
                             카지노 검증/먹튀
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=6">
                             <i class="metismenu-icon"></i>
                             자유게시판
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=19">
                             <i class="metismenu-icon"></i>
                             회원이벤트
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=7">
                             <i class="metismenu-icon"></i>
                             온카지노 후기
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=9">
                             <i class="metismenu-icon"></i>
                             오프카지노 후기
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=8">
                             <i class="metismenu-icon"></i>
                             질문/답변
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=10">
                             <i class="metismenu-icon"></i>
                             카지노 노하우
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=11">
                             <i class="metismenu-icon"></i>
                             블랙리스트
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=12">
                             <i class="metismenu-icon"></i>
                             분쟁게시판
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=13">
                             <i class="metismenu-icon"></i>
                             펌/카지노 노하우
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=14">
                             <i class="metismenu-icon"></i>
                             펌/오프라인 후기
                         </a>
                     </li>
                     <li <c:if test="${(curUrl eq '/admin/rsv/list') || (curUrl eq '/admin/rsv/rsvInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/rsv/list">
+                        <a href="/board/list?class_seq=15">
                             <i class="metismenu-icon"></i>
                             펌/연제
                         </a>

@@ -13,7 +13,7 @@ public class AES256Cipher {
 
     private static volatile AES256Cipher INSTANCE;
 
-    final static String secretKey = "qlwpdlzjabslxl102030405060jdkrrlacajftn"; //32bit
+    final static String secretKey = "qlwpdlzjabslxlqlwpdlzjabslxl1234"; //32bit
     static String IV = ""; //16bit
 
     public static AES256Cipher getInstance() {

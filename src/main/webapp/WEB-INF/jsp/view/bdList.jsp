@@ -19,17 +19,17 @@
                                 <div class="col-md-12">
                                     <div class="main-card mb-3 card">
                                         <div class="card-body">
-                                            <h5 class="card-title">Member Management</h5>
+                                            <h5 class="card-title">Board Management</h5>
                                             <div class="row" style="padding-left:15px; padding-right:15px; margin-bottom:20px;">
                                                 <table class="mb-0 table table-hover">
                                                     <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>아이디</th>
-                                                        <th>이름</th>
+                                                        <th>제목</th>
+                                                        <th>등록아이디</th>
                                                         <th>닉네임</th>
-                                                        <th>이메일</th>
-                                                        <th>전화번호</th>
+                                                        <th>조회수</th>
+                                                        <th>추천수</th>
                                                         <th>가입일</th>
                                                     </tr>
                                                     </thead>
@@ -39,16 +39,16 @@
                                                             <td colspan="5" style="text-align: center;">데이터가 존재하지 않습니다.</td>
                                                         </tr>
                                                     </c:if>
-                                                    <c:forEach var="mbList" items="${mbList}" varStatus="status">
+                                                    <c:forEach var="bdList" items="${bdList}" varStatus="status">
                                                         <c:if test="${status.count > 0}" >
                                                             <tr>
-                                                                <td scope="row" name="order_num">${mbList.rownum}</td>
-                                                                <td><a class="infoLike" >${mbList.member_id}</a></td>
-                                                                <td><a class="infoLike" >${mbList.member_name}</a></td>
-                                                                <td><a class="infoLike" >${mbList.member_nick}</a></td>
-                                                                <td><a class="infoLike" >${mbList.member_email}</a></td>
-                                                                <td><a class="infoLike" >${mbList.member_phone}</a></td>
-                                                                <td><a class="infoLike" >${mbList.reg_date}</a></td>
+                                                                <td scope="row" name="order_num">${bdList.rownum}</td>
+                                                                <td><a class="infoLike" >${bdList.board_title}</a></td>
+                                                                <td><a class="infoLike" >${bdList.member_id}</a></td>
+                                                                <td><a class="infoLike" >${bdList.member_name}</a></td>
+                                                                <td><a class="infoLike" >${bdList.board_view_cnt}</a></td>
+                                                                <td><a class="infoLike" >${bdList.board_recomm_cnt}</a></td>
+                                                                <td><a class="infoLike" >${bdList.reg_date}</a></td>
                                                             </tr>
                                                         </c:if>
                                                     </c:forEach>
@@ -65,24 +65,24 @@
 
                                         <c:if test="${pageMaker.prev}">
                                             <li>
-                                                <a href='<c:url value="/member/list?page=${pageMaker.startPage-1 }"/>'><</a>
+                                                <a href='<c:url value="/board/list?page=${pageMaker.startPage-1 }&class_seq=${class_seq}"/>'><</a>
                                             </li>
                                         </c:if>
                                         <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="pageNum">
                                             <c:if test="${curPage == pageNum}" >
                                                 <li class="on">
-                                                    <a href='<c:url value="/member/list?page=${pageNum}"/>'>${pageNum}</a>
+                                                    <a href='<c:url value="/board/list?page=${pageNum}"/>&class_seq=${class_seq}'>${pageNum}</a>
                                                 </li>
                                             </c:if>
                                             <c:if test="${curPage != pageNum}" >
                                                 <li>
-                                                    <a href='<c:url value="/member/list?page=${pageNum}"/>'>${pageNum}</a>
+                                                    <a href='<c:url value="/board/list?page=${pageNum}"/>&class_seq=${class_seq}'>${pageNum}</a>
                                                 </li>
                                             </c:if>
                                         </c:forEach>
                                         <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
                                             <li>
-                                                <a href='<c:url value="/member/list?page=${pageMaker.endPage+1 }"/>'> > </a>
+                                                <a href='<c:url value="/board/list?page=${pageMaker.endPage+1 }&class_seq=${class_seq}"/>'> > </a>
                                             </li>
                                         </c:if>
                                     </ul>

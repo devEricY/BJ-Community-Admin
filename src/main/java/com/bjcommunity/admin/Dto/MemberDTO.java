@@ -20,6 +20,7 @@ public class MemberDTO extends PagingDTO{
     private int member_point;
 
     private int fail_cnt;
+    private int rownum;
 
     private String mail_yn;
     private String sms_yn;

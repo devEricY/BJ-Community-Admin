@@ -1,9 +1,10 @@
 package com.bjcommunity.admin.Controller;
 
-import com.bjcommunity.admin.Dto.AdminDTO;
+import com.bjcommunity.admin.Dto.BoardDTO;
 import com.bjcommunity.admin.Dto.CommonDTO;
 import com.bjcommunity.admin.Dto.MemberDTO;
 import com.bjcommunity.admin.Service.AdminService;
+import com.bjcommunity.admin.Service.BoardService;
 import com.bjcommunity.admin.Service.CommonService;
 import com.bjcommunity.admin.Service.MemberService;
 import com.bjcommunity.admin.utils.CommonUtils;
@@ -24,15 +25,15 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/member")
-public class MemberController {
+@RequestMapping(value = "/board")
+public class BoardController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    MemberService memberService;
+    CommonService commonService;
 
     @Autowired
-    CommonService commonService;
+    BoardService boardService;
 
     @Autowired
     CommonUtils commonUtils;
@@ -41,32 +42,33 @@ public class MemberController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView main(@RequestParam Map<String, String> parameters, HttpServletRequest request,
-                             @RequestParam(value = "page", defaultValue = "1") int pageNum, MemberDTO pagingDTO){
-        ModelAndView  modelview = new ModelAndView("/view/mbList");
+                             @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "class_seq", defaultValue = "1") int class_seq, BoardDTO pagingDTO){
+        ModelAndView  modelview = new ModelAndView("/view/bdList");
         HttpSession session = request.getSession();
 
-        List<MemberDTO> mbList = new ArrayList<MemberDTO>();
+        List<BoardDTO> bdList = new ArrayList<BoardDTO>();
+        pagingDTO.setBoard_class_seq(class_seq);
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setPaging(pagingDTO);
 
         try {
-            pageMaker.setTotalCount(memberService.get_member_listCnt(pagingDTO));
-            mbList = memberService.get_member_list(pagingDTO);
+            pageMaker.setTotalCount(boardService.get_board_listCnt(pagingDTO));
+            bdList = boardService.get_board_list(pagingDTO);
         } catch (Exception e) {
             System.out.println(e.getMessage().toString());
         }
 
         modelview.addObject("admin_auth", session.getAttribute("admin_auth"));
         modelview.addObject("admin_id", session.getAttribute("admin_id"));
-        modelview.addObject("mbList", mbList);
-        modelview.addObject("mbListCnt", pageMaker.getTotalCount());
+        modelview.addObject("bdList", bdList);
+        modelview.addObject("bdListCnt", pageMaker.getTotalCount());
         modelview.addObject("pageMaker", pageMaker);
         modelview.addObject("curPage", pageNum);
+        modelview.addObject("class_seq", class_seq);
         modelview.addObject("path", commonUtils.serverPath(request));
         modelview.addObject("isMobile", commonUtils.isMobile(request));
 
         return modelview;
     }
-
 }
