@@ -206,7 +206,7 @@
                     <li <c:if test="${(curUrl eq '/admin/qnaList') || (curUrl eq '/admin/qnaInfo')}"> class="mm-active" </c:if>>
                         <a href="/admin/qnaList">
                             <i class="metismenu-icon"></i>
-                            문의사항
+                            문의
                         </a>
                     </li>
                 </ul>
