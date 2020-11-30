@@ -21,8 +21,8 @@
                 MEMBER_ID,
                 MEMBER_NAME,
                 MEMBER_NICK,
-                MEMBER_EMAIL,
-                MEMBER_PHONE,
+                CONVERT_FROM(DECRYPT(DECODE(MEMBER_EMAIL , 'hex'), 'keys', 'aes'), 'UTF8') MEMBER_EMAIL,
+                CONVERT_FROM(DECRYPT(DECODE(MEMBER_PHONE , 'hex'), 'keys', 'aes'), 'UTF8') MEMBER_PHONE,
                 TO_CHAR(REG_DATE, 'YYYY-MM-DD hh:mi:ss') REG_DATE,
                 MEMBER_STATE
             FROM TB_MEMBER MST

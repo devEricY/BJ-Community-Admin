@@ -38,7 +38,6 @@ public class MemberController {
     CommonUtils commonUtils;
     CommonDTO commonDTO;
 
-
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView main(@RequestParam Map<String, String> parameters, HttpServletRequest request,
                              @RequestParam(value = "page", defaultValue = "1") int pageNum, MemberDTO pagingDTO){

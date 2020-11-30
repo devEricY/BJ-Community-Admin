@@ -189,7 +189,7 @@
                 </a>
                 <ul>
                     <li <c:if test="${(curUrl eq '/admin/qnaList') || (curUrl eq '/admin/qnaInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/qnaList">
+                        <a href="/board/list?class_seq=16">
                             <i class="metismenu-icon"></i>
                             공지사항
                         </a>
@@ -204,7 +204,7 @@
                 </a>
                 <ul>
                     <li <c:if test="${(curUrl eq '/admin/qnaList') || (curUrl eq '/admin/qnaInfo')}"> class="mm-active" </c:if>>
-                        <a href="/admin/qnaList">
+                        <a href="/inquiry/list?">
                             <i class="metismenu-icon"></i>
                             문의
                         </a>

@@ -52,8 +52,35 @@
         SELECT COUNT(*) boardCnt, TO_CHAR(REG_DATE, 'YYYY-MM-DD') reg_date
         FROM TB_BOARD
         WHERE TO_CHAR(REG_DATE, 'YYYY-MM-DD') > TO_CHAR((CURRENT_DATE - INTERVAL '10 days'), 'YYYY-MM-DD')
-        GROUP BY REG_DATE
+        GROUP BY TO_CHAR(REG_DATE, 'YYYY-MM-DD')
         ORDER BY REG_DATE
+    </select>
+
+    <select id="get_inquiry_list" resultType="MemberDTO" parameterType="MemberDTO">
+        SELECT
+            ROWNUM rownum,
+            INQUIRY_SEQ,
+            MEMBER_ID,
+            MEMBER_NICK,
+            LOCK_YN,
+            LOCK_PWD,
+            TITLE,
+            CONTENTS,
+            REG_DATE reg_date
+        FROM (
+            SELECT
+            ROW_NUMBER () OVER (ORDER BY INQUIRY_SEQ DESC) as ROWNUM,
+            INQUIRY_SEQ,
+            TITLE,
+            CONTENTS,
+            LOCK_YN,
+            LOCK_PWD,
+            MEMBER_ID,
+            (select MEMBER_NICK FROM TB_MEMBER where MST.MEMBER_ID = MEMBER_ID) MEMBER_NICK,
+            TO_CHAR(REG_DATE, 'YYYY-MM-DD hh:mi:ss') REG_DATE
+        FROM TB_INQUIRY MST
+        WHERE DEL_YN = 'N'
+        ) x WHERE ROWNUM BETWEEN #{pageStart} AND #{pageEnd}
     </select>
 
 </mapper>
