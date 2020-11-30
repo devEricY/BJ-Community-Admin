@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/board")
 public class BoardController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -40,9 +39,74 @@ public class BoardController {
     CommonDTO commonDTO;
 
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView main(@RequestParam Map<String, String> parameters, HttpServletRequest request,
+    @RequestMapping(value = "/board/list", method = RequestMethod.GET)
+    public ModelAndView boardList(@RequestParam Map<String, String> parameters, HttpServletRequest request,
                              @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "class_seq", defaultValue = "1") int class_seq, BoardDTO pagingDTO){
+        ModelAndView  modelview = new ModelAndView("/view/bdList");
+        HttpSession session = request.getSession();
+
+        List<BoardDTO> bdList = new ArrayList<BoardDTO>();
+        pagingDTO.setBoard_class_seq(class_seq);
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setPaging(pagingDTO);
+
+        try {
+            pageMaker.setTotalCount(boardService.get_board_listCnt(pagingDTO));
+            bdList = boardService.get_board_list(pagingDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage().toString());
+        }
+
+        modelview.addObject("admin_auth", session.getAttribute("admin_auth"));
+        modelview.addObject("admin_id", session.getAttribute("admin_id"));
+        modelview.addObject("bdList", bdList);
+        modelview.addObject("bdListCnt", pageMaker.getTotalCount());
+        modelview.addObject("pageMaker", pageMaker);
+        modelview.addObject("curPage", pageNum);
+        modelview.addObject("class_seq", class_seq);
+        modelview.addObject("path", commonUtils.serverPath(request));
+        modelview.addObject("isMobile", commonUtils.isMobile(request));
+
+        return modelview;
+    }
+
+
+    @RequestMapping(value = "/inquiry/list", method = RequestMethod.GET)
+    public ModelAndView inquryList(@RequestParam Map<String, String> parameters, HttpServletRequest request,
+                             @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "class_seq", defaultValue = "1") int class_seq, BoardDTO pagingDTO){
+        ModelAndView  modelview = new ModelAndView("/view/bdList");
+        HttpSession session = request.getSession();
+
+        List<BoardDTO> bdList = new ArrayList<BoardDTO>();
+        pagingDTO.setBoard_class_seq(class_seq);
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setPaging(pagingDTO);
+
+        try {
+            pageMaker.setTotalCount(boardService.get_board_listCnt(pagingDTO));
+            bdList = boardService.get_board_list(pagingDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage().toString());
+        }
+
+        modelview.addObject("admin_auth", session.getAttribute("admin_auth"));
+        modelview.addObject("admin_id", session.getAttribute("admin_id"));
+        modelview.addObject("bdList", bdList);
+        modelview.addObject("bdListCnt", pageMaker.getTotalCount());
+        modelview.addObject("pageMaker", pageMaker);
+        modelview.addObject("curPage", pageNum);
+        modelview.addObject("class_seq", class_seq);
+        modelview.addObject("path", commonUtils.serverPath(request));
+        modelview.addObject("isMobile", commonUtils.isMobile(request));
+
+        return modelview;
+    }
+
+    @RequestMapping(value = "/notice/list", method = RequestMethod.GET)
+    public ModelAndView noticeList(@RequestParam Map<String, String> parameters, HttpServletRequest request,
+                                   @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "class_seq", defaultValue = "1") int class_seq, BoardDTO pagingDTO){
         ModelAndView  modelview = new ModelAndView("/view/bdList");
         HttpSession session = request.getSession();
 

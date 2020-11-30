@@ -1,6 +1,8 @@
 package com.bjcommunity.admin.Mapper;
 
 import com.bjcommunity.admin.Dto.BoardDTO;
+import com.bjcommunity.admin.Dto.InquiryDTO;
+import com.bjcommunity.admin.Dto.NoticeDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,4 +28,19 @@ public class BoardMapper {
         return sqlSession.selectOne(NAMESPACE + "get_board_listCnt", boardDTO);
     }
 
+    public List<BoardDTO> get_inquiry_list(InquiryDTO inquiryDTO){
+        return sqlSession.selectList(NAMESPACE + "get_inquiry_list", inquiryDTO);
+    }
+
+    public int get_inquiry_listCnt(InquiryDTO inquiryDTO){
+        return sqlSession.selectOne(NAMESPACE + "get_inquiry_listCnt", inquiryDTO);
+    }
+
+    public List<BoardDTO> get_notice_list(NoticeDTO noticeDTO){
+        return sqlSession.selectList(NAMESPACE + "get_notice_list", noticeDTO);
+    }
+
+    public int get_notice_listCnt(NoticeDTO noticeDTO){
+        return sqlSession.selectOne(NAMESPACE + "get_notice_listCnt", noticeDTO);
+    }
 }
