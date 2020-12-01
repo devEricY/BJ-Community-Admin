@@ -13,11 +13,11 @@ public interface BoardService {
 
     public int get_board_listCnt(BoardDTO boardDTO) throws Exception;
 
-    public List<BoardDTO> get_inquiry_list(InquiryDTO inquiryDTO) throws Exception;
+    public List<InquiryDTO> get_inquiry_list(InquiryDTO inquiryDTO) throws Exception;
 
     public int get_inquiry_listCnt(InquiryDTO inquiryDTO) throws Exception;
 
-    public List<BoardDTO> get_notice_list(NoticeDTO noticeDTO) throws Exception;
+    public List<NoticeDTO> get_notice_list(NoticeDTO noticeDTO) throws Exception;
 
     public int get_notice_listCnt(NoticeDTO noticeDTO) throws Exception;
 

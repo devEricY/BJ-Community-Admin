@@ -1,8 +1,6 @@
 package com.bjcommunity.admin.Controller;
 
-import com.bjcommunity.admin.Dto.BoardDTO;
-import com.bjcommunity.admin.Dto.CommonDTO;
-import com.bjcommunity.admin.Dto.MemberDTO;
+import com.bjcommunity.admin.Dto.*;
 import com.bjcommunity.admin.Service.AdminService;
 import com.bjcommunity.admin.Service.BoardService;
 import com.bjcommunity.admin.Service.CommonService;
@@ -74,19 +72,18 @@ public class BoardController {
 
     @RequestMapping(value = "/inquiry/list", method = RequestMethod.GET)
     public ModelAndView inquryList(@RequestParam Map<String, String> parameters, HttpServletRequest request,
-                             @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "class_seq", defaultValue = "1") int class_seq, BoardDTO pagingDTO){
-        ModelAndView  modelview = new ModelAndView("/view/bdList");
+                             @RequestParam(value = "page", defaultValue = "1") int pageNum, InquiryDTO pagingDTO){
+        ModelAndView  modelview = new ModelAndView("/view/iqList");
         HttpSession session = request.getSession();
 
-        List<BoardDTO> bdList = new ArrayList<BoardDTO>();
-        pagingDTO.setBoard_class_seq(class_seq);
+        List<InquiryDTO> bdList = new ArrayList<InquiryDTO>();
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setPaging(pagingDTO);
 
         try {
-            pageMaker.setTotalCount(boardService.get_board_listCnt(pagingDTO));
-            bdList = boardService.get_board_list(pagingDTO);
+            pageMaker.setTotalCount(boardService.get_inquiry_listCnt(pagingDTO));
+            bdList = boardService.get_inquiry_list(pagingDTO);
         } catch (Exception e) {
             System.out.println(e.getMessage().toString());
         }
@@ -97,7 +94,6 @@ public class BoardController {
         modelview.addObject("bdListCnt", pageMaker.getTotalCount());
         modelview.addObject("pageMaker", pageMaker);
         modelview.addObject("curPage", pageNum);
-        modelview.addObject("class_seq", class_seq);
         modelview.addObject("path", commonUtils.serverPath(request));
         modelview.addObject("isMobile", commonUtils.isMobile(request));
 
@@ -106,19 +102,18 @@ public class BoardController {
 
     @RequestMapping(value = "/notice/list", method = RequestMethod.GET)
     public ModelAndView noticeList(@RequestParam Map<String, String> parameters, HttpServletRequest request,
-                                   @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "class_seq", defaultValue = "1") int class_seq, BoardDTO pagingDTO){
-        ModelAndView  modelview = new ModelAndView("/view/bdList");
+                                   @RequestParam(value = "page", defaultValue = "1") int pageNum, NoticeDTO pagingDTO){
+        ModelAndView  modelview = new ModelAndView("/view/ntList");
         HttpSession session = request.getSession();
 
-        List<BoardDTO> bdList = new ArrayList<BoardDTO>();
-        pagingDTO.setBoard_class_seq(class_seq);
+        List<NoticeDTO> bdList = new ArrayList<NoticeDTO>();
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setPaging(pagingDTO);
 
         try {
-            pageMaker.setTotalCount(boardService.get_board_listCnt(pagingDTO));
-            bdList = boardService.get_board_list(pagingDTO);
+            pageMaker.setTotalCount(boardService.get_notice_listCnt(pagingDTO));
+            bdList = boardService.get_notice_list(pagingDTO);
         } catch (Exception e) {
             System.out.println(e.getMessage().toString());
         }
@@ -129,7 +124,6 @@ public class BoardController {
         modelview.addObject("bdListCnt", pageMaker.getTotalCount());
         modelview.addObject("pageMaker", pageMaker);
         modelview.addObject("curPage", pageNum);
-        modelview.addObject("class_seq", class_seq);
         modelview.addObject("path", commonUtils.serverPath(request));
         modelview.addObject("isMobile", commonUtils.isMobile(request));
 

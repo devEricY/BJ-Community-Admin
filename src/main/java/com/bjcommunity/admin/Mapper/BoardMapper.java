@@ -28,7 +28,7 @@ public class BoardMapper {
         return sqlSession.selectOne(NAMESPACE + "get_board_listCnt", boardDTO);
     }
 
-    public List<BoardDTO> get_inquiry_list(InquiryDTO inquiryDTO){
+    public List<InquiryDTO> get_inquiry_list(InquiryDTO inquiryDTO){
         return sqlSession.selectList(NAMESPACE + "get_inquiry_list", inquiryDTO);
     }
 
@@ -36,7 +36,7 @@ public class BoardMapper {
         return sqlSession.selectOne(NAMESPACE + "get_inquiry_listCnt", inquiryDTO);
     }
 
-    public List<BoardDTO> get_notice_list(NoticeDTO noticeDTO){
+    public List<NoticeDTO> get_notice_list(NoticeDTO noticeDTO){
         return sqlSession.selectList(NAMESPACE + "get_notice_list", noticeDTO);
     }
 
